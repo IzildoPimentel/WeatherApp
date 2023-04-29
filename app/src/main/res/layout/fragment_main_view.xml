@@ -15,6 +15,8 @@
             android:id="@+id/location_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="105dp"
+            android:layout_marginBottom="149dp"
             android:width="200dp"
             android:height="48dp"
             android:background="@null"
@@ -24,42 +26,15 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/temperature_text_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <TextView
-            android:id="@+id/description_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/fetch_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature_text_view"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <Button
-            android:id="@+id/fetch_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fetch"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_text_view"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/temperature_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="94dp"
             android:width="48dp"
             android:height="48dp"
             android:autoText="true"
@@ -69,12 +44,34 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/description_text_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/description_text_view"
             app:layout_constraintTop_toBottomOf="@+id/location_edit_text"
-            app:layout_constraintVertical_bias="0.5"
             tools:ignore="Deprecated" />
+
+        <TextView
+            android:id="@+id/description_text_view"
+            android:layout_width="84dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="105dp"
+            android:text="Description"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/fetch_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature_text_view" />
+
+        <Button
+            android:id="@+id/fetch_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="118dp"
+            android:text="Fetch"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_text_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

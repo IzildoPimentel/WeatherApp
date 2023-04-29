@@ -11,7 +11,7 @@ class WeatherViewModel : ViewModel() {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={7b4f0f093674ad8d437d3b7eb0f37191}")
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .client(OkHttpClient.Builder().addInterceptor { chain ->
                 val request = chain.request().newBuilder().build()
                 chain.proceed(request)
