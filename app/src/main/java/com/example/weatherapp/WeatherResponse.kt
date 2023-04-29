@@ -2,14 +2,12 @@ package com.example.weatherapp
 
 data class WeatherResponse(
     val name: String,
-    val main: Main,
+    val temperature: Double,
     val weather: List<Weather>
-)
+) {
+    data class Weather(
+        val main: String,
+        val description: String
+    )
+}
 
-data class Main(
-    val temp: Double
-)
-
-data class Weather(
-    val description: String
-)

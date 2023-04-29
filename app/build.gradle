@@ -24,7 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField("String", "API_KEY", "\" https://api.openweathermap.org/data/2.5/\"")
+            buildConfigField("String", "API_KEY", "\"7b4f0f093674ad8d437d3b7eb0f37191\"")
         }
     }
     compileOptions {

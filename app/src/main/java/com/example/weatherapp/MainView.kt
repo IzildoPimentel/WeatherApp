@@ -1,4 +1,5 @@
 package com.example.weatherapp
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainView : Fragment() {
 
@@ -35,18 +38,27 @@ class MainView : Fragment() {
 
         fetchButton.setOnClickListener {
             lifecycleScope.launch {
-                // Get the location from the EditText
-                val location = locationEditText.text.toString()
+                withContext(Dispatchers.IO) {
+                    // Get the location from the EditText
+                    val location = locationEditText.text.toString()
 
-                // Call the getCurrentWeather method in the ViewModel to fetch the weather data
-                val weatherResponse = weatherViewModel.getCurrentWeather(location, "metric", "weather", BuildConfig.API_KEY)
+                    // Call the getCurrentWeather method in the ViewModel to fetch the weather data
+                    val weatherResponse = weatherViewModel.getCurrentWeather(
+                        location,
+                        "metric",
+                        "weather"
+                    )
 
-                // Update the UI with the weather data
-                temperatureTextView.text = getString(
-                    R.string.temperature_format,
-                    weatherResponse.main.temp.toString()
-                )
-                descriptionTextView.text = weatherResponse.weather[0].description
+                    // Update the UI with the weather data on the Main thread
+                    withContext(Dispatchers.Main) {
+                        temperatureTextView.text = getString(
+                            R.string.temperature_format,
+                            weatherResponse.temperature.toString()
+                        )
+                        descriptionTextView.text =
+                            weatherResponse.weather.firstOrNull()?.description.orEmpty()
+                    }
+                }
             }
         }
     }
