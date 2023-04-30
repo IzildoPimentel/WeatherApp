@@ -1,12 +1,14 @@
 package com.example.weatherapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +29,6 @@ class MainView : Fragment() {
         return inflater.inflate(R.layout.fragment_main_view, container, false)
     }
 
-    @Override
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,28 +38,34 @@ class MainView : Fragment() {
         val fetchButton = view.findViewById<Button>(R.id.fetch_button)
 
         fetchButton.setOnClickListener {
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    // Get the location from the EditText
-                    val location = locationEditText.text.toString()
-
-                    // Call the getCurrentWeather method in the ViewModel to fetch the weather data
-                    val weatherResponse = weatherViewModel.getCurrentWeather(
-                        location,
-                        "metric",
-                        "weather"
-                    )
-
-                    // Update the UI with the weather data on the Main thread
-                    withContext(Dispatchers.Main) {
-                        temperatureTextView.text = getString(
-                            R.string.temperature_format,
-                            weatherResponse.temperature.toString()
-                        )
-                        descriptionTextView.text =
-                            weatherResponse.weather.firstOrNull()?.description.orEmpty()
+            val location = locationEditText.text.toString()
+            val apiKey = BuildConfig.API_KEY
+            if (location.isNotBlank()) {
+                lifecycleScope.launch {
+                    try {
+                        val weatherResponse = weatherViewModel.getCurrentWeather(location, apiKey)
+                        Log.d("MainView", "Weather response: $weatherResponse")
+                        withContext(Dispatchers.Main) {
+                            temperatureTextView.text = getString(
+                                R.string.temperature_format,
+                                weatherResponse.main.temperature.toString()
+                            )
+                            descriptionTextView.text = weatherResponse.weather.firstOrNull()?.description.orEmpty()
+                        }
+                    } catch (e: ApiException) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to fetch weather data. Error: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter a location.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

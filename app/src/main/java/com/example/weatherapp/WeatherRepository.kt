@@ -2,16 +2,16 @@ package com.example.weatherapp
 
 class WeatherRepository(private val weatherApi: WeatherApi) {
 
-    suspend fun getCurrentWeather(lat: String, lon: String, apiKey: String): WeatherResponse {
+    suspend fun getCurrentWeather(location: String, apiKey: String): WeatherResponse {
         val response = try {
-            weatherApi.getCurrentWeather(lat, lon, apiKey)
+            weatherApi.getCurrentWeather(location, "metric", apiKey)
         } catch (e: Exception) {
             throw ApiException(e.message)
         }
         return WeatherResponse(
             name = response.name,
             weather = response.weather,
-            temperature = response.temperature,
+            main = WeatherResponse.Main(response.main.temp)
         )
     }
 }
